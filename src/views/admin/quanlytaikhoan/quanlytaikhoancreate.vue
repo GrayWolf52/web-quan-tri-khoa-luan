@@ -2,23 +2,11 @@
   <div>
     <CRow>
       <CCol md="12">
-        <CButton
-          type="reset"
-          size="sm"
-          color="danger"
-          class="btn btn-custom-size"
-          @click="CancelCreate()"
-        >
+        <CButton type="reset" size="sm" color="danger" class="btn btn-custom-size" @click="CancelCreate()">
           <i class="cil-x"></i>
           Huỷ
         </CButton>
-        <CButton
-          type="submit"
-          size="sm"
-          color="primary"
-          class="btn btn-custom-size"
-          @click="createNewAccount()"
-        >
+        <CButton type="submit" size="sm" color="primary" class="btn btn-custom-size" @click="createNewAccount()">
           <i class="cil-plus"></i>
           Thêm mới
         </CButton>
@@ -30,7 +18,7 @@
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
-            <strong> Thông tin khách hàng </strong>
+            <strong> Thông tin người dùng </strong>
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
@@ -38,74 +26,47 @@
                 <div style="width: 15%; float: left; font-weight: 600">
                   Tài khoản <span style="color: red">*</span>
                 </div>
-                <input
-                  type="text"
-                  class="input-custom-border-none"
-                  placeholder="Nhập tên đăng nhập"
-                  style="width: 70%"
-                  v-model="username"
-                />
+                <input type="text" class="input-custom-border-none" placeholder="Nhập tên đăng nhập" style="width: 70%"
+                  v-model="userName" />
               </CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
                   Mật khẩu <span style="color: red">*</span>
                 </div>
-                <input
-                  type="password"
-                  class="input-custom-border-none"
-                  placeholder="Nhập mật khẩu"
-                  style="width: 70%"
-                  v-model="password"
-                />
+                <input type="password" class="input-custom-border-none" placeholder="Nhập mật khẩu" style="width: 70%"
+                  v-model="passWord" />
               </CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
-                  Họ và tên <span style="color: red">*</span>
+                  Họ <span style="color: red">*</span>
                 </div>
 
-                <input
-                  type="text"
-                  class="input-custom-border-none"
-                  placeholder="Nhập họ tên khách hàng"
-                  style="width: 70%"
-                  v-model="fullname"
-                />
+                <input type="text" class="input-custom-border-none" placeholder="Nhập họ người dùng" style="width: 70%"
+                  v-model="firstName" />
               </CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
-                  Email <span style="color: red">*</span>
+                  Tên <span style="color: red">*</span>
                 </div>
-                <input
-                  type="text"
-                  class="input-custom-border-none"
-                  placeholder="Nhập email khách hàng"
-                  style="width: 70%"
-                  v-model="email"
-                />
+
+                <input type="text" class="input-custom-border-none" placeholder="Nhập tên người dùng" style="width: 70%"
+                  v-model="lastName" />
               </CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
                   Điện thoại
                 </div>
 
-                <input
-                  type="text"
-                  class="input-custom-border-none"
-                  placeholder="Số điện thoại"
-                  style="width: 70%"
-                  v-model="phone"
-              /></CListGroupItem>
+                <input type="text" class="input-custom-border-none" placeholder="Số điện thoại" style="width: 70%"
+                  v-model="phone" />
+              </CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
                   Địa chỉ
                 </div>
-                <input
-                  type="text"
-                  class="input-custom-border-none"
-                  placeholder="Địa chỉ cụ thể"
-                  style="width: 70%"
-                  v-model="address"
-              /></CListGroupItem>
+                <input type="text" class="input-custom-border-none" placeholder="Địa chỉ cụ thể" style="width: 70%"
+                  v-model="address" />
+              </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
@@ -122,20 +83,15 @@ export default {
 
   data() {
     return {
-      //   selected: [], // Must be an array reference!
-      //   show: true,
-      //   horizontal: { label: "col-3", input: "col-9" },
-      //   selectedOption: "some value",
-
-      //   orderDetails: [],
-
-      //   formCollapsed: true,
-      username: "",
-      password: "",
-      fullname: "",
-      email: "",
-      address: "",
+      firstName: "",
+      lastName: "",
       phone: "",
+      address: "",
+      position: "",
+      department: "",
+      userName: "",
+      passWord: "",
+      createBy: "",
     };
   },
   created() {
@@ -153,16 +109,16 @@ export default {
     },
     createNewAccount() {
       let item = {
-        username: this.username,
-        password: this.password,
-        fullname: this.fullname,
-        email: this.email,
-        address: this.address,
+        firstName: this.firstName,
+        lastName: this.lastName,
         phone: this.phone,
+        address: this.address,
+        userName: this.userName,
+        passWord: this.passWord,
       };
       console.log(item)
       axios
-        .put(this.$store.state.MainLink + "customer/account/create", item)
+        .post(this.$store.state.MainLink + "User/AddUser", item)
         .then((response) => {
           console.log(response);
           this.$router.push({
@@ -183,11 +139,13 @@ export default {
   margin-left: 15px;
   float: right;
 }
+
 .input-custom-border-none {
   border: none;
   box-shadow: none;
   box-sizing: border-box;
 }
+
 .title-td {
   width: 35%;
 }

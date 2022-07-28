@@ -1,70 +1,40 @@
 <template>
   <div>
     <CRow>
-      <CCol md="12" lg="7">
+      <CCol md="12" lg="12">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
-            <!-- <i class="cil-image"></i>  -->
-            <strong> Ảnh sản phẩm</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CCarousel arrows indicators animate height="auto" > 
-              <!-- {{getData}} -->
-              
-              <!-- <CCarouselItem v-for="itemPhoto in getData.photos" :key="itemPhoto"
-                image="itemPhoto"
-              /> -->
-              <div v-for="itemPhoto in getData.photos" :key="itemPhoto">
-                <img :src="itemPhoto" alt="">
-              </div>
-            </CCarousel>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol md="12" lg="5">
-        <CCard>
-          <CCardHeader>
-            <CIcon name="cil-justify-center" />
-            <strong> Thông tin của sản phẩm </strong>
+            <strong> Thông tin của nhóm </strong>
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
               <CListGroupItem>
-                <span class="Title-font-size">Mã số máy : </span>
+                <span class="Title-font-size">Mã nhóm : </span>
                 <span>{{ getData.id }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Tên máy : </span>
-                <span>{{ getData.name }}</span>
+                <span class="Title-font-size">Tên nhóm : </span>
+                <span>{{ getData.groupName }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Thương hiệu : </span>
-                <span>{{ getData.id }}</span>
+                <span class="Title-font-size">Mã người tạo : </span>
+                <span>{{ getData.creatorId }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Giá : </span>
-                <span>{{ formatPrice(getData.price) }} đ</span>
+                <span class="Title-font-size">Người tạo : </span>
+                <span>{{ getData.creator }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Ngày đăng : </span>
-                <span>{{ getData.id }}</span>
-              </CListGroupItem>
-              <CListGroupItem>
-                <span class="Title-font-size">Trạng thái : </span>
-                <span>{{ getData.status }}</span>
-              </CListGroupItem>
-              <CListGroupItem>
-                <span class="Title-font-size">Thời gian bảo hành: : </span>
-                <span>{{ getData.id }}</span>
+                <span class="Title-font-size">Ngày tạo : </span>
+                <span>{{ getData.createdTime }}</span>
               </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
       </CCol>
 
-      <CCol md="12">
-        <!-- <strong> Thông tin cấu hình sản phẩm </strong> -->
+      <!-- <CCol md="12">
         <table class="table" style="background: white">
           <tbody>
             <thead>
@@ -73,12 +43,12 @@
               </tr>
             </thead>
             <tr v-for="item in getData.productDetails" :key="item">
-              <td>{{item.propertyName}}</td>
-              <td>{{item.propertyValue}}</td>
-            </tr>        
+              <td>{{ item.propertyName }}</td>
+              <td>{{ item.propertyValue }}</td>
+            </tr>
           </tbody>
         </table>
-      </CCol>
+      </CCol> -->
     </CRow>
   </div>
 </template>
@@ -121,9 +91,9 @@ export default {
     },
     getDetailProduct() {
       axios
-        .get(this.$store.state.MainLink + "customer/products/" + this.item)
+        .get(this.$store.state.MainLink + "Group/GetById/" + this.item)
         .then((response) => {
-          this.getData = response.data.object;
+          this.getData = response.data;
           console.log(this.getData);
         })
         .catch((e) => {

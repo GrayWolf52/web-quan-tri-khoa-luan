@@ -2,15 +2,11 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách nhóm</p>
+        <p class="Text-tile-2">Trang chủ ● nhóm</p>
       </div>
       <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
+        <button type="button" class="btn btn-primary float-right btn-add" @click="CreateNewProduct()">
           <i class="cil-plus"></i>
           Thêm mới
         </button>
@@ -19,48 +15,27 @@
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
       <form class="form-inline">
-        <input
-          @change="searchProduct()"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-          v-model="searchString"
-        />
+        <input @change="searchProduct()" class="form-control mr-sm-2" type="search" placeholder="Search"
+          aria-label="Search" style="box-shadow: none" v-model="searchString" />
       </form>
     </nav>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">STT</th>
-          <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <th scope="col" class="Title-table td-action" colspan="2">
-            Tình trạng sản phẩm
-          </th>
+          <th scope="col" class="Title-table" colspan="1">Tên nhóm</th>
           <th class="Title-table"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
-          <th scope="row" class="td-table">{{ item.name }}</th>
-          <td :style="{ color: Status(item) }">
-            {{ item.status }}
-          </td>
+          <th scope="row" class="td-table">{{ item.groupName }}</th>
           <td class="td-table td-action">
-            <button
-              type="button"
-              class="btn btn-primary btn-size"
-              @click="DetailProduct(item.id)"
-            >
+            <button type="button" class="btn btn-primary btn-size" @click="DetailProduct(item.id)">
               <i class="cil-folder-open"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-size"
-              @click="deleteProduct(item.id)"
-            >
+            <button type="button" class="btn btn-danger btn-size" @click="deleteProduct(item.id)">
               <i class="cil-trash"></i>
             </button>
           </td>
@@ -69,11 +44,7 @@
     </table>
     <div class="card-body"></div>
     <div class="card-footer pb-0 pt-3" style="text-align: center">
-      <jw-pagination
-        :maxPages="15"
-        :items="getData"
-        @changePage="onChangePage"
-      ></jw-pagination>
+      <jw-pagination :maxPages="15" :items="getData" @changePage="onChangePage"></jw-pagination>
     </div>
   </div>
 </template>
@@ -134,17 +105,9 @@ export default {
       });
     },
     deleteProduct(item) {
-      console.log(item)
-      console.log(this.$store.state.userToken);
       axios
         .delete(
-          this.$store.state.MainLink + "admin/products/delete/" + item,
-          {
-            headers: {
-              // Authorization: this.$store.state.userToken,
-              Authorization: localStorage.usertoken,
-            },
-          }
+          this.$store.state.MainLink + "Group/Delete/" + item
         )
 
         .then((response) => {
@@ -174,9 +137,10 @@ export default {
     },
     getAllProduct() {
       axios
-        .get(this.$store.state.MainLink + "customer/products")
+        .get(this.$store.state.MainLink + "Group/GetAll")
         .then((response) => {
-          this.getData = response.data.object;
+          this.getData = response.data;
+          console.log(response);
         })
         .catch((e) => {
           console.log(e);

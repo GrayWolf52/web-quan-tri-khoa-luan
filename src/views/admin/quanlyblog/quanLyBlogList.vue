@@ -2,15 +2,11 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách sự kiện</p>
+        <p class="Text-tile-2">Trang chủ ● Sự kiện</p>
       </div>
       <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
+        <button type="button" class="btn btn-primary float-right btn-add" @click="CreateNewProduct()">
           <i class="cil-plus"></i>
           Thêm mới
         </button>
@@ -19,13 +15,8 @@
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
       <form class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-        />
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+          style="box-shadow: none" />
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           <i class="cil-magnifying-glass"></i>
         </button>
@@ -35,15 +26,15 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Tên Blog</th>
-          <th scope="col">Thời gian tạo</th>
+          <th scope="col">Tên sự kiện</th>
+          <th scope="col">Mô tả</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in getData" :key="index">
+        <tr v-for="(item, index) in getData" :key="index" @click="detailEvent(item.id)">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
-          <td>{{ item.timeCreated }}</td>
+          <td>{{ item.description }}</td>
         </tr>
       </tbody>
     </table>
@@ -81,28 +72,19 @@ export default {
         name: "Thêm mới sản phẩm",
       });
     },
-    DetailProduct(id) {
+    detailEvent(id) {
       console.log(id);
       this.$router.push({
-        name: "Thông tin chi tiết sản phẩm",
+        name: "Thông tin chi tiết Blog",
         params: { item: id },
       });
     },
     getAllProduct() {
       axios
-        .get(this.$store.state.MainLink + "admin/blog", {
-          headers: {
-            Authorization: this.$store.state.userToken,
-          },
-        })
+        .get(this.$store.state.MainLink + "Event/GetAll")
         .then((response) => {
-          this.getData = response.data.object;
-          // console.log(response.data.object);
-          for (var item in this.getData) {
-            // console.log(item);
-
-            console.log(this.getData[item].productColors);
-          }
+          this.getData = response.data;
+          console.log(this.getData);
         })
         .catch((e) => {
           console.log(e);

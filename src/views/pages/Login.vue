@@ -9,34 +9,20 @@
                 <CForm>
                   <h1>Đăng nhập</h1>
                   <p class="text-muted">Đăng nhập vào tài khoản quản trị</p>
-                  <CInput
-                    placeholder="Tài khoản"
-                    autocomplete="username email"
-                    v-model="username"
-                  >
-                    <template #prepend-content
-                      ><CIcon name="cil-user"
-                    /></template>
+                  <CInput placeholder="Tài khoản" autocomplete="username email" v-model="username">
+                    <template #prepend-content>
+                      <CIcon name="cil-user" />
+                    </template>
                   </CInput>
-                  <CInput
-                    placeholder="Mật khẩu"
-                    type="password"
-                    autocomplete="curent-password"
-                    v-model="password"
-                  >
-                    <template #prepend-content
-                      ><CIcon name="cil-lock-locked"
-                    /></template>
+                  <CInput placeholder="Mật khẩu" type="password" autocomplete="curent-password" v-model="password">
+                    <template #prepend-content>
+                      <CIcon name="cil-lock-locked" />
+                    </template>
                   </CInput>
                   <CRow style="margin: 10px 10px 10px 10px">
                     <CCol col="6" class="text-left">
-                      <CButton
-                        color="primary"
-                        class="px-4"
-                        style="margin: 10px 10px 10px 10px"
-                        @click="LoginJWT()"
-                        >Đăng nhập</CButton
-                      >
+                      <CButton color="primary" class="px-4" style="margin: 10px 10px 10px 10px" @click="LoginJWT()">Đăng
+                        nhập</CButton>
                     </CCol>
                     <CCol col="6" class="text-right">
                       <CButton color="link" class="px-0">Quên mật khẩu</CButton>
@@ -88,55 +74,23 @@ export default {
       // console.log("username: " + this.username);
       // console.log("password: " + this.password);
       axios
-        .post(this.$store.state.MainLink + "authentication/login", {
+        .post(this.$store.state.MainLink + "User/Login", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
-          // console.log("username: " + this.username);
-          // console.log("password: " + this.password);
-          this.$store.state.userName = response.data.username;
-
-          // console.log(response);
-          localStorage.username = response.data.username;
-          localStorage.usertoken = response.data.tokenType + " " + response.data.accessToken;
-          this.$store.state.userToken =
-            response.data.tokenType + " " + response.data.accessToken;
-
-          // console.log(this.$store.state.userToken);
-
-          if (response.data.roles[0] == "Director") {
-            this.$router.push({
-              path: "/dashboard",
-            });
-            // console.log("Chuyển trang admin");
-          } else if (response.data.roles[0] == "Staff") {
-            this.$router.push({
-              path: "/dashboard",
-            });
-            // console.log("Chuyển trang admin");
-          } else if (response.data.roles[0] == "User") {
-            // this.$router.push({
-            //   path: "/dashboard",
-            // });
-            this.$toasted.show(
-              "Thông tin không chính xác, vui lòng nhập lại !",
-              {
-                type: "error",
-                duration: 2000,
-              }
-            );
-            // console.log("Chuyển trang admin");
-          } else {
-            console.log("Tài khoản hoặc mật khẩu không chính xác !");
-          }
+          this.$router.push({
+            path: "/dashboard",
+          });
+          localStorage.username = response.data;
+          console.log(response);
         })
         .catch((e) => {
           this.error.push(e);
         });
     },
 
-    getDataUser() {},
+    getDataUser() { },
     direcToDash() {
       this.$router.push({
         path: "/",

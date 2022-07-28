@@ -6,11 +6,7 @@
         <p class="Text-tile-2">Trang chủ ● tài khoản</p>
       </div>
       <div class="col-md-6 float-right">
-        <button
-            type="button"
-            class="btn btn-primary float-right btn-add"
-            @click="CreateNewAccount()"
-        >
+        <button type="button" class="btn btn-primary float-right btn-add" @click="CreateNewAccount()">
           <i class="cil-plus"></i>
           Thêm mới
         </button>
@@ -18,47 +14,39 @@
     </div>
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
-      <form class="form-inline">
-        <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            style="box-shadow: none"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+      <div style="display: flex;">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+          style="box-shadow: none" v-model="search" />
+        <button class="btn btn-outline-success my-2 my-sm-0" @click="searchUser()">
           <i class="cil-magnifying-glass"></i>
         </button>
-      </form>
+      </div>
+
     </nav>
     <table class="table table-hover">
       <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Tên đăng nhập</th>
-        <th scope="col">Tên người dùng</th>
-        <th scope="col">Email</th>
-        <th scope="col">Trạng thái</th>
-        <th scope="col"></th>
-      </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tên đăng nhập</th>
+          <th scope="col">Tên người dùng</th>
+          <th scope="col">Điện thoại</th>
+          <!-- <th scope="col">Trạng thái</th> -->
+          <th scope="col"></th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, index) in getData" :key="index" @click="detailAccount(item.id)">
-        <th scope="row">{{ index + 1 }}</th>
-        <td>{{ item.username }}</td>
-        <td>{{ item.fullname }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.userStatus }}</td>
-        <td class="td-table td-action">
-          <button
-              type="button"
-              class="btn btn-danger btn-size"
-              @click="deleteAccount(item.id)"
-          >
-            <i class="cil-trash"></i>
-          </button>
-        </td>
-      </tr>
+        <tr v-for="(item, index) in getData" :key="index" @click="detailAccount(item.id)">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ item.username }}</td>
+          <td>{{ item.lastName }}</td>
+          <td>{{ item.phone }}</td>
+          <!-- <td>{{ item.userStatus }}</td> -->
+          <td class="td-table td-action">
+            <button type="button" class="btn btn-danger btn-size" @click="deleteAccount(item.id)">
+              <i class="cil-trash"></i>
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -72,18 +60,7 @@ export default {
   data() {
     return {
       getData: "",
-      formData: {
-        name: "",
-        price: "",
-        status: "",
-        orderDetails: "",
-        blogs: "",
-        productCategories: "",
-        sales: "",
-        productColors: [],
-        cartDetails: "",
-        productDetails: [],
-      },
+      search: ""
     };
   },
   created() {
@@ -102,28 +79,40 @@ export default {
         params: { item: id },
       });
     },
-    deleteAccount(item){
+    deleteAccount(item) {
       console.log(item)
+      axios
+        .delete(this.$store.state.MainLink + "User/" + item)
+        .then((response) => {
+          // this.getData = response.data;
+          console.log('Xóa thành công!');
+          this.getAllProduct();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     getAllProduct() {
       axios
-          .get(this.$store.state.MainLink + "customer/account/findAll", {
-            headers: {
-              // Authorization: this.$store.state.userToken,
-              Authorization: localStorage.usertoken,
-            },
-          })
-          .then((response) => {
-            this.getData = response.data.object;
-            console.log(this.getData)
-            // console.log(response.data.object);
-            // for (var item in this.getData) {
-            //   console.log(this.getData[item].productColors);
-            // }
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        .get(this.$store.state.MainLink + "User/GetAll")
+        .then((response) => {
+          this.getData = response.data;
+          console.log(this.getData)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    searchUser() {
+      axios
+        .get(this.$store.state.MainLink + "User/Search?prefix=" + this.search)
+        .then((response) => {
+          this.getData = response.data;
+          console.log(this.getData)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
   },
 };
