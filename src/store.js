@@ -7,7 +7,8 @@ const state = {
     sidebarMinimize: false,
     userToken: "",
     userName: "",
-    MainLink: "http://localhost:5000/api/"
+    MainLink: "http://localhost:5000/api/",
+    dataUser: {}
 }
 
 const mutations = {

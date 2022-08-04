@@ -1,25 +1,22 @@
 <template>
-  <CDropdown
-    inNav
-    class="c-header-nav-items"
-    placement="bottom-end"
-    add-menu-classes="pt-0"
-  >
+  <CDropdown inNav class="c-header-nav-items" placement="bottom-end" add-menu-classes="pt-0">
     <template #toggler>
       <CHeaderNavLink style="    text-decoration: none;">
-        <div>Xin chào,{{ userName }} !   </div>
+        <!-- <div>Xin chào,{{ userName }} !   </div> -->
         <div class="c-avatar">
           <img src="/img/avatars/avatar.png" class="c-avatar-img" />
         </div>
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
-      <strong>Settings</strong>
+      <!-- <strong>Settings</strong> -->
     </CDropdownHeader>
-    <CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-user" /> Thông tin tài khoản
     </CDropdownItem>
-    <CDropdownItem> <CIcon name="cil-settings" /> Cài đặt </CDropdownItem>
+    <CDropdownItem>
+      <CIcon name="cil-settings" /> Cài đặt
+    </CDropdownItem> -->
     <!-- <CDropdownItem>
       <CIcon name="cil-dollar" /> Payments
       <CBadge color="secondary" class="mfs-auto">{{ itemsCount }}</CBadge>

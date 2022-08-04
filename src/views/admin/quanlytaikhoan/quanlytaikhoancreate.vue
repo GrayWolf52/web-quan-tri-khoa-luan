@@ -67,6 +67,20 @@
                 <input type="text" class="input-custom-border-none" placeholder="Địa chỉ cụ thể" style="width: 70%"
                   v-model="address" />
               </CListGroupItem>
+              <CListGroupItem>
+                <div style="width: 15%; float: left; font-weight: 600">
+                  Chức vụ
+                </div>
+                <input type="text" class="input-custom-border-none" placeholder="Chức vụ nhân viên" style="width: 70%"
+                  v-model="position" />
+              </CListGroupItem>
+              <CListGroupItem>
+                <div style="width: 15%; float: left; font-weight: 600">
+                  Phòng ban
+                </div>
+                <input type="text" class="input-custom-border-none" placeholder="Phòng ban" style="width: 70%"
+                  v-model="department" />
+              </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
@@ -91,11 +105,11 @@ export default {
       department: "",
       userName: "",
       passWord: "",
-      createBy: "",
+      createBy: ""
     };
   },
   created() {
-    // this.getAllProduct();
+    this.getListUser();
   },
   methods: {
     validator(val) {
@@ -115,8 +129,9 @@ export default {
         address: this.address,
         userName: this.userName,
         passWord: this.passWord,
+        position: this.position,
+        department: this.department
       };
-      console.log(item)
       axios
         .post(this.$store.state.MainLink + "User/AddUser", item)
         .then((response) => {
@@ -126,9 +141,10 @@ export default {
           });
         })
         .catch((e) => {
-          console.log(e);
+          console.log(e.message);
+          alert('Tài khoản đã có, vui lòng chọn tài khoản khác!')
         });
-    },
+    }
   },
 };
 </script>

@@ -65,8 +65,9 @@ export default {
   name: "Login",
   data() {
     return {
+      getData: "",
       username: "",
-      password: "",
+      password: ""
     };
   },
   methods: {
@@ -83,10 +84,20 @@ export default {
             path: "/dashboard",
           });
           localStorage.username = response.data;
-          console.log(response);
+          axios
+            .get(
+              this.$store.state.MainLink + "User/GetById/" + response.data
+            )
+            .then((response) => {
+              this.getData = response.data;
+              this.$store.state.dataUser = response.data
+            })
+            .catch((e) => {
+              console.log(e);
+            });
         })
         .catch((e) => {
-          this.error.push(e);
+          alert("Tài khoản hoặc mật khẩu không chính xác, vui lòng kiểm tra lại!")
         });
     },
 

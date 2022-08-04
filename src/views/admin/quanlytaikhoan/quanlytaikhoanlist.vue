@@ -35,11 +35,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in getData" :key="index" @click="detailAccount(item.id)">
-          <th scope="row">{{ index + 1 }}</th>
-          <td>{{ item.username }}</td>
-          <td>{{ item.lastName }}</td>
-          <td>{{ item.phone }}</td>
+        <tr v-for="(item, index) in getData" :key="index">
+          <th scope="row" @click="detailAccount(item.id)">{{ index + 1 }}</th>
+          <td @click="detailAccount(item.id)">{{ item.username }}</td>
+          <td @click="detailAccount(item.id)">{{ item.lastName }}</td>
+          <td @click="detailAccount(item.id)">{{ item.phone }}</td>
           <!-- <td>{{ item.userStatus }}</td> -->
           <td class="td-table td-action">
             <button type="button" class="btn btn-danger btn-size" @click="deleteAccount(item.id)">
@@ -73,22 +73,21 @@ export default {
       });
     },
     detailAccount(id) {
-      console.log(id);
+      // console.log(id);
       this.$router.push({
         name: "Chi tiết tài khoản",
         params: { item: id },
       });
     },
     deleteAccount(item) {
-      console.log(item)
       axios
         .delete(this.$store.state.MainLink + "User/" + item)
         .then((response) => {
-          // this.getData = response.data;
-          console.log('Xóa thành công!');
+          alert('Xóa thành công!');
           this.getAllProduct();
         })
         .catch((e) => {
+          alert('Xóa thất bại!');
           console.log(e);
         });
     },
@@ -97,22 +96,26 @@ export default {
         .get(this.$store.state.MainLink + "User/GetAll")
         .then((response) => {
           this.getData = response.data;
-          console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);
         });
     },
     searchUser() {
-      axios
-        .get(this.$store.state.MainLink + "User/Search?prefix=" + this.search)
-        .then((response) => {
-          this.getData = response.data;
-          console.log(this.getData)
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (this.search != "") {
+        axios
+          .get(this.$store.state.MainLink + "User/Search?prefix=" + this.search)
+          .then((response) => {
+            this.getData = response.data;
+            console.log(this.getData)
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        this.getAllProduct();
+      }
+
     },
   },
 };

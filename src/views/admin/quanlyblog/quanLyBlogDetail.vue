@@ -22,6 +22,29 @@
                                 <span>{{ getData.description }}</span>
                             </CListGroupItem>
                             <CListGroupItem>
+                                <span class="Title-font-size">Nhóm : </span>
+                                <span>{{ group.groupName }}</span>
+                            </CListGroupItem>
+                            <CListGroupItem>
+                                <span class="Title-font-size">Danh sách người tham gia : </span>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Tên người dùng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in getData.participants" :key="index">
+                                            <th scope="row">{{ index + 1 }}</th>
+                                            <td>
+                                                {{ item.firstname }} {{ item.lastname }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </CListGroupItem>
+                            <CListGroupItem>
                                 <span class="Title-font-size">Thời gian bắt đầu : </span>
                                 <span>{{ getData.startTime }}</span>
                             </CListGroupItem>
@@ -33,22 +56,6 @@
                     </CCardBody>
                 </CCard>
             </CCol>
-
-            <!-- <CCol md="12">
-        <table class="table" style="background: white">
-          <tbody>
-            <thead>
-              <tr>
-                <th scope="col">Thông tin cấu hình sản phẩm</th>
-              </tr>
-            </thead>
-            <tr v-for="item in getData.productDetails" :key="item">
-              <td>{{ item.propertyName }}</td>
-              <td>{{ item.propertyValue }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </CCol> -->
         </CRow>
     </div>
 </template>
@@ -68,7 +75,7 @@ export default {
             show: true,
             horizontal: { label: "col-3", input: "col-9" },
             selectedOption: "some value",
-
+            group: "",
             formCollapsed: true,
         };
     },
@@ -94,7 +101,18 @@ export default {
                 .get(this.$store.state.MainLink + "Event/" + this.item)
                 .then((response) => {
                     this.getData = response.data;
-                    console.log(this.getData);
+                    console.log(response.data);
+                    axios
+                        .get(
+                            this.$store.state.MainLink + "Group/GetById/" + response.data.groupId
+                        )
+                        .then((response) => {
+                            this.group = response.data;
+                            console.log(response);
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
                 })
                 .catch((e) => {
                     console.log(e);
