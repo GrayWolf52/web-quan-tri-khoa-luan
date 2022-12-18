@@ -13,8 +13,8 @@
             </CButton>
             <CButton type="submit" size="sm" color="primary" class="btn btn-custom-size" @click="UpdateGroup()" v-else
               style="float: right;">
-              <i class="cil-sync"></i>
-              Sửa nhóm
+
+              Lưu
             </CButton>
             <CButton type="submit" size="sm" color="danger" class="btn btn-custom-size" @click="CancelCreate()"
               style="float: right;">
@@ -35,6 +35,10 @@
                   style="width: 80%" />
               </CListGroupItem>
               <CListGroupItem>
+                <span class="Title-font-size">Mô tả : </span>
+                <span>{{ getData.groupDescription }}</span>
+              </CListGroupItem>
+              <CListGroupItem>
                 <span class="Title-font-size">Mã người tạo : </span>
                 <span>{{ dataUser.id }}</span>
               </CListGroupItem>
@@ -42,10 +46,7 @@
                 <span class="Title-font-size">Người tạo : </span>
                 <span>{{ dataUser.firstName }}</span> <span>{{ dataUser.lastName }}</span>
               </CListGroupItem>
-              <CListGroupItem>
-                <span class="Title-font-size">Điện thoại : </span>
-                <span>{{ dataUser.phone }}</span>
-              </CListGroupItem>
+
               <CListGroupItem>
                 <span class="Title-font-size">Ngày tạo : </span>
                 <span>{{ getData.createdTime }}</span>

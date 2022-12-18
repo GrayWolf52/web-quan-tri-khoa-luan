@@ -116,7 +116,8 @@ export default {
       checkProduct: 0,
       getData: "",
       listUser: [],
-      idGroup: 0
+      idGroup: 0,
+      descriptionGroup: ""
     };
   },
   created() {
@@ -137,7 +138,8 @@ export default {
           lastName: this.dataUser.lastName,
           phone: this.dataUser.phone,
           address: this.dataUser.address
-        }
+        },
+        description: this.descriptionGroup
       };
       this.show = 0;
       axios

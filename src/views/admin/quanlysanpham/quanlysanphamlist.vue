@@ -22,15 +22,18 @@
     <table class="table">
       <thead>
         <tr>
+          <th scope="col">#</th>
           <th scope="col">ID</th>
-          <th scope="col" class="Title-table" colspan="1">Tên nhóm</th>
+          <th scope="col">Tên nhóm</th>
           <th class="Title-table"></th>
         </tr>
       </thead>
+
       <tbody>
         <tr v-for="(item, index) in getData" :key="index">
-          <th>{{ item.id }}</th>
-          <th scope="row" class="td-table">{{ item.groupName }}</th>
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ item.id }}</td>
+          <td>{{ item.groupName }}</td>
           <td class="td-table td-action">
             <button type="button" class="btn btn-primary btn-size" @click="DetailProduct(item.id)">
               <i class="cil-folder-open"></i>
