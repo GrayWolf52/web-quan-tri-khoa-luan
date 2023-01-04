@@ -30,6 +30,10 @@
                 <input type="text" class="input-custom-border-none" placeholder="Nhập tên nhóm" v-model="nameGroup"
                   style="width: 80%" />
               </CListGroupItem>
+              <CListGroupItem>Mô tả nhóm:
+                <input type="text" class="input-custom-border-none" placeholder="Nhập mô tả nhóm"
+                  v-model="descriptinGroup" style="width: 80%" />
+              </CListGroupItem>
               <CListGroupItem> Thông tin người tạo: <br /><br />
                 <label>id: </label><input type="text" class="input-custom-border-none" placeholder="Giá máy"
                   v-model="dataUser.id" style="width: 80%" disabled />
@@ -112,12 +116,12 @@ export default {
     return {
       show: 1,
       nameGroup: "",
+      descriptinGroup: "",
       dataUser: {},
       checkProduct: 0,
       getData: "",
       listUser: [],
       idGroup: 0,
-      descriptionGroup: ""
     };
   },
   created() {
@@ -131,6 +135,7 @@ export default {
     createProduct() {
       let item = {
         name: this.nameGroup,
+        description: this.descriptinGroup,
         creator: {
           id: this.dataUser.id,
           userName: this.dataUser.userName,
@@ -139,7 +144,6 @@ export default {
           phone: this.dataUser.phone,
           address: this.dataUser.address
         },
-        description: this.descriptionGroup
       };
       this.show = 0;
       axios

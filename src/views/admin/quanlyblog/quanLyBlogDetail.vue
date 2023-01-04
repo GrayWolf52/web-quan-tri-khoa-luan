@@ -22,8 +22,8 @@
                                 <span>{{ getData.description }}</span>
                             </CListGroupItem>
                             <CListGroupItem>
-                                <span class="Title-font-size">Nhóm : </span>
-                                <span>{{ group.groupName }}</span>
+                                <span class="Title-font-size">Địa điểm : </span>
+                                <span>{{ getData.place }}</span>
                             </CListGroupItem>
                             <CListGroupItem>
                                 <span class="Title-font-size">Danh sách người tham gia : </span>
@@ -51,6 +51,10 @@
                             <CListGroupItem>
                                 <span class="Title-font-size">Thời gian kết thúc : </span>
                                 <span>{{ getData.endTime }}</span>
+                            </CListGroupItem>
+                            <CListGroupItem>
+                                <span class="Title-font-size">Trạng thái sự kiện : </span>
+                                <span>{{ Status(getData.statusEvent) }}</span>
                             </CListGroupItem>
                         </CListGroup>
                     </CCardBody>
@@ -83,6 +87,11 @@ export default {
         this.getDetailProduct();
     },
     methods: {
+        Status(val) {
+            if (val == 0) return "Việc mới";
+            else if (val == 1) return "Đang thực hiện";
+            else if (val == 2) return "Hoàn thành";
+        },
         formatPrice(value) {
             let val = (value / 1).toFixed(0).replace(".", ",");
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -115,7 +124,7 @@ export default {
                         });
                 })
                 .catch((e) => {
-                    console.log(e);
+
                 });
         },
     },
