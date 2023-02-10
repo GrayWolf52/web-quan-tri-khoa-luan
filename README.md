@@ -11,4 +11,10 @@
 - Install [Web Api](https://github.com/GrayWolf52/DoAn_BE) to be able to process data for the application
 - Install [App Android](https://github.com/GrayWolf52/khoaLuan) to be able to use the system
 
+### How to run web
+- Open terminal of Visual Studio Code and input command below
+```
+npm run serve
+```
+
 ![web](https://user-images.githubusercontent.com/56286032/218129122-52d2e7cb-438a-44d5-bc4f-711664916611.png)
